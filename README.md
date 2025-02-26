@@ -20,3 +20,7 @@ show dbs;
 show collections;
 db.fs.files.find().pretty()
 
+python Store_Files.py mydatabase /path/to/your/file.txt [your_filename_in_mongo.txt]
+python Retrieve_Files.py mydatabase output.json
+python Output_File_Data.py mydatabase your_filename.txt
+python Delete_File.py mydatabase your_filename.txt
