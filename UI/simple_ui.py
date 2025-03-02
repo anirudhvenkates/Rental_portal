@@ -7,7 +7,7 @@ def get_user_input():
     password = input("Enter password: ")
     return username, password
 
-def main():
+def simple_main():
     # Step 2: Get user input (username and password)
     username, password = get_user_input()
 
@@ -17,12 +17,9 @@ def main():
     if session:
         # Step 4: If the session is valid, check role and perform operations
         if session['role'] == 'Staff':
-            print("Welcome ",session['username'], "your role is ",session['role'])
+            print("Welcome",session['name'], "your role is ",session['role'])
             perform_operations(session, 'mydatabase')  # Pass session to Property_Handler
         else:
             print("Access denied: Only Staff can perform operations.")
     else:
         print("Authentication failed. Please check your username and password.")
-    
-if __name__ == '__main__':
-    main()
