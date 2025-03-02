@@ -18,9 +18,21 @@ mongsh
 use mydb;
 show dbs;
 show collections;
+db.myCollection.drop()
 db.fs.files.find().pretty()
 
 python Store_Files.py mydatabase /path/to/your/file.txt [your_filename_in_mongo.txt]
 python Retrieve_Files.py mydatabase output.json
 python Output_File_Data.py mydatabase your_filename.txt
 python Delete_File.py mydatabase your_filename.txt
+
+Create a user database
+use users
+db.users.insertOne({
+    name: "Anirudh Venkatesh",
+    ID: "S001",
+    username: "anirudh",
+    password: "password123",
+    role: "Staff"
+})
+db.users.find()

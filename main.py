@@ -1,5 +1,4 @@
-from Core_Business_Layer.Staff import perform_operations
+from UI.ui import main  # Import the main function from the UI layer
 
 if __name__ == '__main__':
-    perform_operations()
-
+    main()  # Call the main function from ui.py
