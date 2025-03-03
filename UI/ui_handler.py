@@ -16,9 +16,3 @@ class UserInterfaceHandler:
             return complex_main
         else:
             raise ValueError(f"Unsupported UI type: {self.ui_type}")
-
-    def set_ui_type(self, ui_type):
-        """
-        Set the UI type dynamically. 
-        """
-        self.ui_type = ui_type

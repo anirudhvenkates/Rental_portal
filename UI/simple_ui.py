@@ -15,7 +15,16 @@ def simple_main():
 
     if property_handler:
         print("Welcome", property_handler.session['name'], "your role is", property_handler.session['role'])
-        # Step 4: Perform operations via PropertyHandler instance
-        property_handler.perform_operations()
+        
+        while True:
+            for i in property_handler.operations():
+                print(i)
+            print("Type Exit to stop")
+                
+            choice = input("\nEnter your choice: ")
+            if choice == "Exit":
+                print("Terminating the Session")
+                return
+            property_handler.perform_operations(choice)
     else:
         print("Authentication failed. Please check your username and password.")

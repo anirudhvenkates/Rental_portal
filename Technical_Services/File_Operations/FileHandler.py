@@ -1,7 +1,7 @@
-from Technical_Services.Store_Files import store_file
-from Technical_Services.Retrieve_Files import retrieve_file
-from Technical_Services.Output_File_Data import output_file_data
-from Technical_Services.Delete_File import delete_file
+from Technical_Services.File_Operations.Store_Files import store_file
+from Technical_Services.File_Operations.Retrieve_Files import retrieve_file
+from Technical_Services.File_Operations.Output_File_Data import output_file_data
+from Technical_Services.File_Operations.Delete_File import delete_file
 
 class FileHandler:
     def __init__(self, database_name):
