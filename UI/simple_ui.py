@@ -1,4 +1,4 @@
-from Core_Business_Layer.Session import create_session
+from Core_Business_Layer.Session import SessionHandler
 
 def get_user_input():
     # Step 1: Get the username and password from the user
@@ -11,7 +11,7 @@ def simple_main():
     username, password = get_user_input()
 
     # Step 3: Call Session.py to authenticate the user and create session
-    property_handler = create_session('users', username, password)
+    property_handler = SessionHandler.create_session('users', username, password)
 
     if property_handler:
         print("Welcome", property_handler.session['name'], "your role is", property_handler.session['role'])
