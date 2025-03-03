@@ -6,5 +6,8 @@ class AuthenticateHandler:
     def authenticate(choice, database, username, password):
         if choice == "simple":
             return SimpleAuthenticate.authenticate_user(database, username, password)
+        elif choice == "third":
+            return ThirdPartyAuthenticate.authenticate_user(database, username, password)
         else:
             raise ValueError(f"Unsupported authentication method: {choice}")
+            
