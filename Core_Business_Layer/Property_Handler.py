@@ -1,13 +1,10 @@
 from Technical_Services.File_Operations.FileHandler import FileHandler
 
 class PropertyHandler:
-    def __init__(self, session, database_name):
+    def __init__(self, session):
         self.session = session
-        self.database_name = database_name
-        self.file_handler = FileHandler(database_name)
-        self.file_path = '/mnt/c/Users/anirudh.venkatesh/Desktop/Project/test_file.txt'
-        self.output_file = 'output.json'
-        self.filename = 'test_file.txt'
+        self.database_name = "users"
+        self.file_handler = FileHandler(self.database_name)
         
     def operations(self):
         return ["1. Store a file","2. Output file data","3. Delete a file", "4. Retrieve file"]

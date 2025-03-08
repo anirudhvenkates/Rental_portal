@@ -3,7 +3,10 @@ from Technical_Services.Authenticate.Simple_Authenticate import SimpleAuthentica
 from Technical_Services.Authenticate.Third_Party_Authenticate import ThirdPartyAuthenticate
 
 class AuthenticateHandler:
-    def authenticate(choice, database, username, password):
+    
+    @staticmethod
+    def authenticate(choice, username, password):
+        database = "users"
         if choice == "simple":
             return SimpleAuthenticate.authenticate_user(database, username, password)
         elif choice == "third":

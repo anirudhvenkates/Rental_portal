@@ -1,18 +1,22 @@
+from Core_Business_Layer.Enquiry_Handler import EnquiryHandler
+from Core_Business_Layer.Property_Handler import PropertyHandler
 from Technical_Services.Authenticate.Authenticate_Handler import AuthenticateHandler
-from Core_Business_Layer.Property_Handler import PropertyHandler  # Make sure to import the PropertyHandler class
 
 class SessionHandler:
-    def create_session(database, username, password):
-        # Call User_Authentication to authenticate the user and get session
-        session = AuthenticateHandler.authenticate("simple",database, username, password)
-        
+    @staticmethod
+    def create_session(username, password):
+        #database = "users"
+        session = AuthenticateHandler.authenticate("simple", username, password)
+
         if session:
-            # If the user is authenticated, check if the role is 'Staff'
             if session['role'] == 'Staff':
-                # Create a PropertyHandler instance and return it along with the session
-                return PropertyHandler(session, database)
+                # Staff can access full file operations
+                return PropertyHandler(session)
+            elif session['role'] == 'Customer':
+                # Customer can only retrieve files
+                return EnquiryHandler(session)
             else:
-                print("Access denied: Only Staff can perform operations.")
-                return None  # Role isn't 'Staff'
+                print("Access denied: Invalid role.")
+                return None
         else:
-            return None  # Authentication failed
+            return None

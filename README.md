@@ -35,4 +35,12 @@ db.users.insertOne({
     password: "password123",
     role: "Staff"
 })
+db.users.insertOne({
+    name: "Anirudh Venkatesh",
+    ID: "S002",
+    username: "anirudh_v",
+    password: "password123",
+    role: "Customer"
+})
 db.users.find()
+db.dropDatabase() 

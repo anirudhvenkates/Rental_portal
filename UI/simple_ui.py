@@ -11,13 +11,13 @@ def simple_main():
     username, password = get_user_input()
 
     # Step 3: Call Session.py to authenticate the user and create session
-    property_handler = SessionHandler.create_session('users', username, password)
+    session_handler = SessionHandler.create_session(username, password)
 
-    if property_handler:
-        print("Welcome", property_handler.session['name'], "your role is", property_handler.session['role'])
+    if session_handler:
+        print("Welcome", session_handler.session['name'], "your role is", session_handler.session['role'])
         
         while True:
-            for i in property_handler.operations():
+            for i in session_handler.operations():
                 print(i)
             print("Type Exit to stop")
                 
@@ -25,6 +25,6 @@ def simple_main():
             if choice == "Exit":
                 print("Terminating the Session")
                 return
-            property_handler.perform_operations(choice)
+            session_handler.perform_operations(choice)
     else:
         print("Authentication failed. Please check your username and password.")
