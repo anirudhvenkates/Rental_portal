@@ -43,4 +43,5 @@ db.users.insertOne({
     role: "Customer"
 })
 db.users.find()
-db.dropDatabase() 
+db.dropDatabase()
+db.users.deleteOne({ username: 'anirudh_v' })

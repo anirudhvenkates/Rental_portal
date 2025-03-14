@@ -4,6 +4,7 @@ class SimpleAuthenticate:
     def authenticate_user(database, username, password):
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client[database]
+        print(username)
         
         # Query the user collection to find the user by username
         user = db.users.find_one({"username": username})
