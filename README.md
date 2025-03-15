@@ -45,3 +45,5 @@ db.users.insertOne({
 db.users.find()
 db.dropDatabase()
 db.users.deleteOne({ username: 'anirudh_v' })
+
+python3 manage.py migrate

@@ -23,6 +23,11 @@ def login_view(request):
             session_handler = SessionHandler.create_session(username, password)
 
             if session_handler:
+                # Store session handler object or relevant user data in Django's session
+                request.session['session_handler'] = {
+                    'name': session_handler.session['name'],
+                    'role': session_handler.session['role']
+                }
                 return redirect('dashboard')  # Redirect to the dashboard
             else:
                 return HttpResponse("Authentication failed, please check your credentials.", status=401)
@@ -48,4 +53,14 @@ def register_view(request):
     return render(request, 'complex_ui/register.html', {'form': form})
 
 def dashboard_view(request):
-    return HttpResponse("Welcome to your dashboard!")
+    # Here, you would retrieve user session data
+    session_handler = request.session.get('session_handler')
+
+    if not session_handler:
+        return redirect('login')  # Redirect to login if session doesn't exist
+
+    user_name = session_handler['name']
+    user_role = session_handler['role']
+    
+    # Pass session-related data to the template
+    return render(request, 'complex_ui/dashboard.html', {'name': user_name, 'role': user_role})
