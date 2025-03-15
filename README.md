@@ -47,3 +47,5 @@ db.dropDatabase()
 db.users.deleteOne({ username: 'anirudh_v' })
 
 python3 manage.py migrate
+
+python manage.py runserver
