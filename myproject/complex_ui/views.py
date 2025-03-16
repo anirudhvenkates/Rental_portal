@@ -14,6 +14,7 @@ from Core_Business_Layer.Session import SessionHandler
 
 from .forms import RegistrationForm, LoginForm
 
+# complex_ui/views.py
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -23,17 +24,21 @@ def login_view(request):
             session_handler = SessionHandler.create_session(username, password)
 
             if session_handler:
-                # Store session handler object or relevant user data in Django's session
-                request.session['session_handler'] = {
+                # Store only serializable data in the session
+                session_data = {
                     'name': session_handler.session['name'],
-                    'role': session_handler.session['role']
+                    'role': session_handler.session['role'],
+                    'username': session_handler.session['username'],
+                    'operations': session_handler.operations()  # Store the operations directly
                 }
+                request.session['session_handler'] = session_data  # Store only serializable data
                 return redirect('dashboard')  # Redirect to the dashboard
             else:
                 return HttpResponse("Authentication failed, please check your credentials.", status=401)
     else:
         form = LoginForm()
     return render(request, 'complex_ui/login.html', {'form': form})
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -52,15 +57,18 @@ def register_view(request):
         form = RegistrationForm()
     return render(request, 'complex_ui/register.html', {'form': form})
 
+# complex_ui/views.py
 def dashboard_view(request):
-    # Here, you would retrieve user session data
-    session_handler = request.session.get('session_handler')
+    # Retrieve session data from the session
+    session_data = request.session.get('session_handler')
 
-    if not session_handler:
+    if not session_data:
         return redirect('login')  # Redirect to login if session doesn't exist
 
-    user_name = session_handler['name']
-    user_role = session_handler['role']
-    
-    # Pass session-related data to the template
-    return render(request, 'complex_ui/dashboard.html', {'name': user_name, 'role': user_role})
+    # Access session data directly
+    user_name = session_data['name']
+    user_role = session_data['role']
+    operations = session_data['operations']  # Directly access the operations list
+
+    # Pass session-related data and operations to the template
+    return render(request, 'complex_ui/dashboard.html', {'name': user_name, 'role': user_role, 'operations': operations})
