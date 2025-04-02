@@ -68,16 +68,22 @@ def dashboard():
 
 @app.route('/perform_operation', methods=['POST'])
 def perform_operation():
-    operation = request.form.get('operation')
     role = session.get('role')
-    username = session.get('username')  # Use username for session recreation
+    username = session.get('username')
+    name = session.get('name')
+    password = session.get('password')
+    operation = request.form.get('operation')  # Retrieve operation from form submission
+    operation = operation[3:]
+    #print(operation[3:])
+
     if role and username:
-        # Recreate the session handler using the stored username and role
-        session_handler = SessionHandler.create_session(username, None, role=role)
+        session_handler = SessionHandler.create_session(username, password)
         if session_handler:
             try:
+                print("Session handler created for perform operation:", session_handler)
                 result = session_handler.perform_operations(operation)
                 flash(result, 'success')
+                return render_template('perform_operation.html', result=result)
             except Exception as e:
                 flash(str(e), 'danger')
         else:
@@ -85,7 +91,7 @@ def perform_operation():
             return redirect(url_for('login'))
     else:
         flash('Session handler not found. Please log in again.', 'danger')
-    return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard'))
 
 def complex_main():
     app.run(debug=True)
