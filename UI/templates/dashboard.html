@@ -6,8 +6,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <p>Welcome, your role is {{ role }}</p>
+    <h1>Welcome, {{ name }}!</h1>
+    <p>Your role is: {{ role }}</p>
+    <h2>Available Operations</h2>
+    <form method="POST" action="{{ url_for('perform_operation') }}">
+        <select name="operation">
+            {% for op in operations %}
+            <option value="{{ op }}">{{ op }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Perform Operation</button>
+    </form>
     <a href="{{ url_for('home') }}">Logout</a>
 </body>
 </html>
