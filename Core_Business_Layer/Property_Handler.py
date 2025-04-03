@@ -17,16 +17,24 @@ class PropertyHandler:
 
         # Store a file
         if choice == "Store a file":
-            print(self.file_handler.store(file_path))  
+            result = self.file_handler.store(file_path)
+            print(result)
+            return result
 
         # Output file data (if needed)
         if choice == "Output file data":
-            print(self.file_handler.output_data(filename))  
+            result = self.file_handler.output_data(filename)
+            print(result)
+            return result 
 
         # Delete a file
         if choice == "Delete a file":
-            print(self.file_handler.delete(filename))
+            result = self.file_handler.delete(filename)
+            print(result)
+            return result
             
         # Retrieve file
         if choice == "Retrieve file":
-            print(self.file_handler.retrieve(output_file))
+            result = self.file_handler.retrieve(output_file)
+            print(result)
+            return result

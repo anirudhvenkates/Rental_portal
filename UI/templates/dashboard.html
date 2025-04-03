@@ -6,17 +6,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Welcome, {{ name }}!</h1>
-    <p>Your role is: {{ role }}</p>
-    <h2>Available Operations</h2>
-    <form method="POST" action="{{ url_for('perform_operation') }}">
-        <select name="operation">
-            {% for op in operations %}
-            <option value="{{ op }}">{{ op }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Perform Operation</button>
-    </form>
-    <a href="{{ url_for('home') }}">Logout</a>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Welcome, {{ name }}!</h1>
+        <p>Your role is: {{ role }}</p>
+        <h2>Available Operations</h2>
+        <form method="POST" action="{{ url_for('perform_operation') }}">
+            <select name="operation">
+                {% for op in operations %}
+                <option value="{{ op }}">{{ op }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Perform Operation</button>
+        </form>
+    </main>
+    <footer>
+        <p>© 2025 Rental Portal. All rights reserved.</p>
+        <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
+    </footer>
 </body>
 </html>

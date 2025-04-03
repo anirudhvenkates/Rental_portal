@@ -82,6 +82,7 @@ def perform_operation():
             try:
                 print("Session handler created for perform operation:", session_handler)
                 result = session_handler.perform_operations(operation)
+                print(result)
                 flash(result, 'success')
                 return render_template('perform_operation.html', result=result)
             except Exception as e:
@@ -92,6 +93,17 @@ def perform_operation():
     else:
         flash('Session handler not found. Please log in again.', 'danger')
         return redirect(url_for('dashboard'))
+
+@app.route('/logout')
+def logout():
+    # Clear the user session
+    session.pop('role', None)
+    session.pop('username', None)
+    session.pop('name', None)
+    session.pop('password', None)
+    flash('You have been logged out.', 'success')
+    # Redirect to the home page after logout
+    return redirect(url_for('home'))
 
 def complex_main():
     app.run(debug=True)
