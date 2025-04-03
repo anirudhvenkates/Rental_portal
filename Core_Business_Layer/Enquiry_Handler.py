@@ -10,10 +10,11 @@ class EnquiryHandler:
     def operations(self):
         return ["1. Output file data"]
 
-    def perform_operations(self, choice):
+    def perform_operations(self, choice, file_info):
         # If the user is a customer, they can only output file data
         # Output file data (if needed)
         if choice == "Output file data":
-            print(self.file_handler.output_data('test_file.txt'))
+            #print(self.file_handler.output_data('test_file.txt'))
+            print(self.file_handler.output_data(file_info))
         else:
             return "Invalid operation for customer."

@@ -35,10 +35,11 @@ def simple_main():
                     print("Type Exit to stop")
                         
                     choice = input("\nEnter your choice: ")
+                    file_info = input("\nEnter file information (Press Enter for no file input): ")
                     if choice == "Exit":
                         print("Terminating the Session")
                         return
-                    session_handler.perform_operations(choice)
+                    session_handler.perform_operations(choice,file_info)
             else:
                 print("Authentication failed. Please check your username and password.")
 

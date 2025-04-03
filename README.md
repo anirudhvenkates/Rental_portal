@@ -45,3 +45,7 @@ db.users.insertOne({
 db.users.find()
 db.dropDatabase()
 db.users.deleteOne({ username: 'anirudh_v' })
+
+find . -name "*.html" -exec echo "Displaying contents of {}:" \; -exec cat {} \;
+
+https://unsplash.com/s/photos/property

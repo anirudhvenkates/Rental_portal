@@ -9,27 +9,28 @@ class PropertyHandler:
     def operations(self):
         return ["1. Store a file","2. Output file data","3. Delete a file", "4. Retrieve file"]
 
-    def perform_operations(self,choice):
+    def perform_operations(self,choice,file_info):
         # Example file operations based on session details
-        file_path = '/mnt/c/Users/anirudh.venkatesh/Desktop/Project/test_file.txt'
+        #file_path = '/mnt/c/Users/anirudh.venkatesh/Desktop/Project/test_file.txt'
+        #file_path = '/mnt/c/Users/anirudh.venkatesh/Desktop/Project/Pic 1.jpg'
         output_file = 'output.json'
-        filename = 'test_file.txt'
+        #filename = 'test_file.txt'
 
         # Store a file
         if choice == "Store a file":
-            result = self.file_handler.store(file_path)
+            result = self.file_handler.store(file_info)
             print(result)
             return result
 
         # Output file data (if needed)
         if choice == "Output file data":
-            result = self.file_handler.output_data(filename)
+            result = self.file_handler.output_data(file_info)
             print(result)
             return result 
 
         # Delete a file
         if choice == "Delete a file":
-            result = self.file_handler.delete(filename)
+            result = self.file_handler.delete(file_info)
             print(result)
             return result
             
