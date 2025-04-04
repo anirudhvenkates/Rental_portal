@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Home - Rental Portal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
@@ -14,12 +14,17 @@
         </nav>
     </header>
     <main>
+        <!-- Welcome image added before the welcome message -->
+        <img src="{{ url_for('static', filename='images/welcome.jpg') }}" alt="Welcome Image" class="welcome-img">
         <h1>Welcome to the Rental Portal</h1>
-		<p>Your gateway to finding the perfect rental property. Whether you're looking for a cozy apartment or a spacious house, we have a wide range of options to suit your needs. Register today to explore exclusive listings and connect with property owners directly. Enjoy a seamless rental experience with us!</p>
+        <p class="welcome-text">
+            Your gateway to finding the perfect rental property. Whether you're looking for a cozy apartment or a spacious house, we have a wide range of options to suit your needs. 
+            Register today to explore exclusive listings and connect with property owners directly. Enjoy a seamless rental experience with us!
+        </p>
     </main>
     <footer>
         <p>© 2025 Rental Portal. All rights reserved.</p>
         <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
     </footer>
 </body>
-</html>	
+</html>

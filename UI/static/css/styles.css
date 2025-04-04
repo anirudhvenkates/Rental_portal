@@ -32,6 +32,24 @@ main {
     padding: 20px;
 }
 
+.welcome-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Welcome text styling */
+.welcome-text {
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.6em;
+    color: #333;
+    margin: 0 20px;
+}
+
 h1 {
     color: #0056b3;
     font-size: 2.5em;
