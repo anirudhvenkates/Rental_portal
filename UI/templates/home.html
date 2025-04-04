@@ -2,29 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Rental Portal</title>
+    <title>Home - PropMatch</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-        <nav>
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('register') }}">Register</a>
-        </nav>
-    </header>
+		<div class="brand">
+			<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+			<span class="site-title">PropMatch</span>
+		</div>
+		<nav>
+			<a href="{{ url_for('login') }}">Login</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+	</header>
+
+
     <main>
-        <!-- Welcome image added before the welcome message -->
-        <img src="{{ url_for('static', filename='images/welcome.jpg') }}" alt="Welcome Image" class="welcome-img">
-        <h1>Welcome to the Rental Portal</h1>
-        <p class="welcome-text">
-            Your gateway to finding the perfect rental property. Whether you're looking for a cozy apartment or a spacious house, we have a wide range of options to suit your needs. 
-            Register today to explore exclusive listings and connect with property owners directly. Enjoy a seamless rental experience with us!
-        </p>
+        <div class="container">
+            <img src="{{ url_for('static', filename='images/welcome.jpg') }}" alt="Welcome Image" class="welcome-img">
+            <h1>Welcome to the Rental Portal</h1>
+            <p class="welcome-text">
+                Your gateway to finding the perfect rental property. Whether you're looking for a cozy apartment or a spacious house, we have a wide range of options to suit your needs. 
+                Register today to explore exclusive listings and connect with property owners directly. Enjoy a seamless rental experience with us!
+            </p>
+        </div>
     </main>
+
     <footer>
-        <p>© 2025 Rental Portal. All rights reserved.</p>
-        <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
+        <div class="container">
+            <p>© 2025 Rental Portal. All rights reserved.</p>
+			<p>Developed by Anirudh Venkatesh</p>
+			<p>Visit GitHub page: https://github.com/anirudhvenkates/Rental_portal</p>
+            <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
+        </div>
     </footer>
 </body>
 </html>
