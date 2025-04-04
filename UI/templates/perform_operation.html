@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <title>Perform Operation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Optional inline styling for the output image */
+        .result-image {
+            max-width: 300px; /* Adjust this value as needed */
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <header>
-		<div class="brand">
-			<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-			<span class="site-title">PropMatch</span>
-		</div>
+        <div class="brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+            <span class="site-title">PropMatch</span>
+        </div>
         <nav>
             <a href="{{ url_for('dashboard') }}">Dashboard</a>
             <a href="{{ url_for('home') }}">Home</a>
@@ -18,13 +25,19 @@
     </header>
     <main>
         <h1>Operation Result</h1>
-        <p>{{ result }}</p>
+        {% if result.startswith("data:image") %}
+            <div>
+                <img src="{{ result }}" alt="File Output" class="result-image">
+            </div>
+        {% else %}
+            <p>{{ result }}</p>
+        {% endif %}
     </main>
     <footer>
         <div class="container">
             <p>© 2025 Rental Portal. All rights reserved.</p>
-			<p>Developed by Anirudh Venkatesh</p>
-			<p>Project on <a href="https://github.com/anirudhvenkates/PropMatch" target="_blank"><strong><u>GitHub</u></strong></a></p>
+            <p>Developed by Anirudh Venkatesh</p>
+            <p>Project on <a href="https://github.com/anirudhvenkates/PropMatch" target="_blank"><strong><u>GitHub</u></strong></a></p>
             <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
         </div>
     </footer>

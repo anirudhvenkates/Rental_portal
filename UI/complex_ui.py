@@ -79,15 +79,11 @@ def perform_operation():
     username = session.get('username')
     name = session.get('name')
     password = session.get('password')
-    
-    # Get the selected operation; remove any unwanted prefix if needed.
+
     operation = request.form.get('operation')
     operation = operation[3:] if operation and len(operation) > 3 else operation
 
-    # Initialize file_info to an empty string.
     file_info = ""
-    
-    # For "Store a file", check if a file has been uploaded.
     if operation and "store a file" in operation.lower():
         if 'file_input' in request.files:
             file = request.files['file_input']
@@ -96,28 +92,21 @@ def perform_operation():
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
                 file_info = file_path
-                print("File stored at:", file_info)
             else:
                 flash("No file selected for upload.", "danger")
                 return redirect(url_for('dashboard'))
         else:
-            # Fall back to reading file_info from form if file_input is missing.
             file_info = request.form.get('file_info', '')
-    
-    # For operations that require manual file name input.
     elif operation and ("delete a file" in operation.lower() or "output file data" in operation.lower()):
         file_info = request.form.get('file_info', '')
-    
-    # For "Retrieve file", no additional file info is required.
 
     if role and username:
         session_handler = SessionHandler.create_session(username, password)
         if session_handler:
             try:
-                print("Session handler created for perform operation:", session_handler)
                 result = session_handler.perform_operations(operation, file_info)
-                print("Operation result:", result)
-                flash(result, 'success')
+                # Only flash a short message, not the full file data
+                flash("Operation completed successfully.", 'success')
                 return render_template('perform_operation.html', result=result)
             except Exception as e:
                 flash(str(e), 'danger')
