@@ -16,35 +16,41 @@
             <a href="{{ url_for('logout') }}">Logout</a>
         </nav>
     </header>
+
     <main>
         <h1>Welcome, {{ name }}!</h1>
         <p>Your role is: {{ role }}</p>
+
         <h2>Available Operations</h2>
         <form method="POST" action="{{ url_for('perform_operation') }}" enctype="multipart/form-data">
-            <select name="operation" id="operation_select">
+            <select name="operation" id="operation_select" required>
                 {% for op in operations %}
                     <option value="{{ op }}">{{ op }}</option>
                 {% endfor %}
             </select>
 
-            <!-- Container for file upload (used for "Store a file") -->
-            <div id="file-upload-container" style="display: none; margin-top:10px;">
-                <label for="file_input">Choose file:</label>
-                <input type="file" id="file_input" name="file_input">
+            <!-- Staff: Store house image -->
+            <div id="store-house-image-details" style="display: none; margin-top: 10px;">
+                <label for="file_upload">Choose File:</label>
+                <input type="file" id="file_upload" name="file_upload"><br><br>
+
+                <label for="house_type">House Type:</label>
+                <input type="text" id="house_type" name="house_type" placeholder="apartment, villa, etc."><br><br>
+
+                <label for="bedrooms">Bedrooms:</label>
+                <input type="number" id="bedrooms" name="bedrooms" placeholder="3"><br><br>
             </div>
 
-            <!-- Container for text input (used for "Delete a file", "Output file data", or "Search Properties") -->
-            <div id="file-text-container" style="display: none; margin-top:10px;">
-                <label for="file_text">Enter file name or property query:</label>
-                <input type="text" id="file_text" name="file_info" placeholder="Enter file name or property query">
+            <!-- Default for all other operations -->
+            <div id="default-text-container" style="display: none; margin-top: 10px;">
+                <label for="default_info">Enter file information or property query:</label>
+                <input type="text" id="default_info" name="file_info" placeholder="Enter details">
             </div>
 
-            <!-- Hidden input to hold the file name from file upload -->
-            <input type="hidden" id="hidden_file_info" name="file_info">
-
-            <button type="submit" style="margin-top:10px;">Perform Operation</button>
+            <button type="submit" style="margin-top: 10px;">Perform Operation</button>
         </form>
     </main>
+
     <footer>
         <div class="container">
             <p>© 2025 Rental Portal. All rights reserved.</p>
@@ -54,48 +60,24 @@
             <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
         </div>
     </footer>
+
     <script>
         function updateFormFields() {
-            var operation = document.getElementById('operation_select').value.toLowerCase();
-            var fileUploadContainer = document.getElementById('file-upload-container');
-            var fileTextContainer = document.getElementById('file-text-container');
-            var fileInput = document.getElementById('file_input');
-            var fileText = document.getElementById('file_text');
-            var hiddenFileInfo = document.getElementById('hidden_file_info');
+            const operation = document.getElementById('operation_select').value;
+            const storeDetails = document.getElementById('store-house-image-details');
+            const defaultContainer = document.getElementById('default-text-container');
 
-            // Hide and disable all additional input containers by default.
-            fileUploadContainer.style.display = 'none';
-            fileTextContainer.style.display = 'none';
-            fileInput.disabled = true;
-            fileText.disabled = true;
-            hiddenFileInfo.disabled = true;
-
-            // If "Store a file" is selected, show the file chooser.
-            if (operation.includes('store a file')) {
-                fileUploadContainer.style.display = 'block';
-                fileInput.disabled = false;
-                hiddenFileInfo.disabled = false;
+            if (operation.includes("Store a House Image")) {
+                storeDetails.style.display = 'block';
+                defaultContainer.style.display = 'none';
+            } else {
+                storeDetails.style.display = 'none';
+                defaultContainer.style.display = 'block';
             }
-            // For "Delete a file", "Output file data", or "Search Properties", show the text input.
-            else if (operation.includes('delete a file') || operation.includes('output file data') || operation.includes('search properties')) {
-                fileTextContainer.style.display = 'block';
-                fileText.disabled = false;
-            }
-            // Otherwise, no additional input is required.
         }
 
         document.getElementById('operation_select').addEventListener('change', updateFormFields);
-        updateFormFields(); // initialize on page load
-
-        // When a file is chosen for "Store a file", copy its name into the hidden input.
-        document.getElementById('file_input').addEventListener('change', function(){
-            var hiddenFileInfo = document.getElementById('hidden_file_info');
-            if(this.files.length > 0){
-                hiddenFileInfo.value = this.files[0].name;
-            } else {
-                hiddenFileInfo.value = '';
-            }
-        });
+        window.onload = updateFormFields;
     </script>
 </body>
 </html>

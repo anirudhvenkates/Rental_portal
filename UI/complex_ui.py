@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Define an upload folder for storing temporary files
+# Upload directory
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -23,9 +23,8 @@ def login():
         password = request.form['password']
         session_handler = SessionHandler.create_session(username, password)
         if session_handler:
-            print("Session handler created during login:", session_handler)
             session['role'] = session_handler.session['role']
-            session['username'] = username  # Store username for session recreation
+            session['username'] = username
             session['name'] = session_handler.session['name']
             session['password'] = password
             flash('Login successful!', 'success')
@@ -42,9 +41,8 @@ def register():
         name = request.form['name']
         session_handler = SessionHandler.create_session([username, name], password, "Customer")
         if session_handler:
-            print("Session handler created during registration:", session_handler)
             session['role'] = session_handler.session['role']
-            session['username'] = username  # Store username for session recreation
+            session['username'] = username
             session['name'] = session_handler.session['name']
             session['password'] = password
             flash('User created successfully!', 'success')
@@ -56,14 +54,13 @@ def register():
 @app.route('/dashboard')
 def dashboard():
     role = session.get('role')
-    username = session.get('username')  # Use username for session recreation
+    username = session.get('username')
     name = session.get('name')
     password = session.get('password')
+
     if role and username:
-        # Recreate the session handler using the stored username and password
         session_handler = SessionHandler.create_session(username, password)
         if session_handler:
-            print("Session handler created for dashboard:", session_handler)
             operations = session_handler.operations()
             return render_template('dashboard.html', name=name, role=role, operations=operations)
         else:
@@ -75,61 +72,59 @@ def dashboard():
 
 @app.route('/perform_operation', methods=['POST'])
 def perform_operation():
+    operation = request.form.get('operation')
     role = session.get('role')
     username = session.get('username')
     name = session.get('name')
     password = session.get('password')
 
-    operation = request.form.get('operation')
-    operation = operation[3:] if operation and len(operation) > 3 else operation
-
-    file_info = ""
-    if operation and "store a file" in operation.lower():
-        if 'file_input' in request.files:
-            file = request.files['file_input']
-            if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)
-                file_info = file_path
-            else:
-                flash("No file selected for upload.", "danger")
-                return redirect(url_for('dashboard'))
-        else:
-            file_info = request.form.get('file_info', '')
-    elif operation and ("delete a file" in operation.lower() or "output file data" in operation.lower()):
-        file_info = request.form.get('file_info', '')
-
     if role and username:
         session_handler = SessionHandler.create_session(username, password)
-        if session_handler:
-            try:
-                result = session_handler.perform_operations(operation, file_info)
-                # Only flash a short message, not the full file data
-                flash("Operation completed successfully.", 'success')
-                return render_template('perform_operation.html', result=result)
-            except Exception as e:
-                flash(str(e), 'danger')
-                return redirect(url_for('dashboard'))
-        else:
-            flash('Failed to recreate session handler.', 'danger')
+        if not session_handler:
+            flash("Failed to recreate session handler.", "danger")
             return redirect(url_for('login'))
+
+        try:
+            # Build file_info appropriately
+            if operation.strip().endswith("Store a House Image"):
+                file = request.files.get('file_upload')
+                house_type = request.form.get('house_type')
+                bedrooms = request.form.get('bedrooms')
+
+                if file:
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    file_info = f"file_path {file_path} house_type {house_type} bedrooms {bedrooms}"
+                else:
+                    flash("File not uploaded properly.", "danger")
+                    return redirect(url_for('dashboard'))
+
+            else:
+                file_info = request.form.get('file_info', '')
+
+            # Normalize choice for customer search
+            result = session_handler.perform_operations(operation[3:], file_info)
+
+            if isinstance(result, list):
+                # Customer property search
+                return render_template('display_properties.html', properties=result)
+            else:
+                flash("Operation completed successfully.", "success")
+                return render_template('perform_operation.html', result=result)
+
+        except Exception as e:
+            flash(str(e), "danger")
+            return redirect(url_for('dashboard'))
     else:
-        flash('Session handler not found. Please log in again.', 'danger')
-        return redirect(url_for('dashboard'))
+        flash("Session expired. Please log in again.", "danger")
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
-    # Clear the user session
-    session.pop('role', None)
-    session.pop('username', None)
-    session.pop('name', None)
-    session.pop('password', None)
+    session.clear()
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
 def complex_main():
     app.run(debug=True)
-
-if __name__ == '__main__':
-    complex_main()

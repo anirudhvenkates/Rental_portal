@@ -47,5 +47,10 @@ db.dropDatabase()
 db.users.deleteOne({ username: 'anirudh_v' })
 
 find . -name "*.html" -exec echo "Displaying contents of {}:" \; -exec cat {} \;
+I need a 3 bedroom apartment with a garden
+
+file_path /path/to/image.jpg house_type apartment bedrooms 3
+
+data URI in Property Retriever vs GUI
 
 https://unsplash.com/s/photos/property

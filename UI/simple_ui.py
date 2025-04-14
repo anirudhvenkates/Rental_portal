@@ -30,25 +30,34 @@ def simple_main():
                 print("Welcome", session_handler.session['name'], "your role is", session_handler.session['role'])
                 
                 while True:
-                    for i in session_handler.operations():
-                        print(i)
+                    for op in session_handler.operations():
+                        print(op)
                     print("Type Exit to stop")
                         
-                    choice = input("\nEnter your choice: ")
-                    file_info = input("\nEnter file information (Press Enter for no file input): ")
-                    if choice == "Exit":
+                    op_choice = input("\nEnter your choice: ")
+                    if op_choice == "Exit":
                         print("Terminating the Session")
                         return
-                    session_handler.perform_operations(choice,file_info)
+                    
+                    file_info = input("\nEnter file information (Press Enter for no file input): ")
+                    result = session_handler.perform_operations(op_choice, file_info)
+                    
+                    # In case of a property search, 'result' is an aggregated list.
+                    if isinstance(result, list):
+                        print("\nProperty Search Results:")
+                        for prop in result:
+                            print("House Type:", prop.get("house_type"))
+                            print("Bedrooms:", prop.get("bedrooms"))
+                            print("Image data: (data URI) ", prop.get("data_uri")[:50], "...")  # print a snippet
+                            print("-" * 40)
+                    else:
+                        print("\nOperation result:", result)
             else:
                 print("Authentication failed. Please check your username and password.")
 
         elif choice == "2":
             username, password, name = get_user_input_for_registration()
-
-            # Pass username, password, and name as a list to create session
             session_handler = SessionHandler.create_session([username, name], password, "Customer")
-
             if session_handler:
                 print("User created successfully and session started.")
                 print(f"Welcome {session_handler.session['name']}, your role is {session_handler.session['role']}")

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Search Results - PropMatch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .property {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .property img {
+            max-width: 300px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+            <span class="site-title">PropMatch</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Property Search Results</h1>
+        {% if properties %}
+            {% for prop in properties %}
+                <div class="property">
+                    <h3>House Type: {{ prop.house_type }}</h3>
+                    <p>Bedrooms: {{ prop.bedrooms }}</p>
+                    {% if prop.image_data.startswith("data:image") %}
+                        <img src="{{ prop.data_uri }}" alt="Property Image">
+                    {% else %}
+                        <p>No image available.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No properties found matching your criteria.</p>
+        {% endif %}
+    </main>
+    <footer>
+        <div class="container">
+            <p>© 2025 Rental Portal. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
