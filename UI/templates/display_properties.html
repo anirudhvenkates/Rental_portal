@@ -34,7 +34,7 @@
                 <div class="property">
                     <h3>House Type: {{ prop.house_type }}</h3>
                     <p>Bedrooms: {{ prop.bedrooms }}</p>
-                    {% if prop.image_data.startswith("data:image") %}
+                    {% if prop.data_uri.startswith("data:image") %}
                         <img src="{{ prop.data_uri }}" alt="Property Image">
                     {% else %}
                         <p>No image available.</p>

@@ -85,13 +85,13 @@ def perform_operation():
             return redirect(url_for('login'))
 
         try:
-            # Build file_info appropriately
+            # Handle staff operation that involves file upload
             if operation.strip().endswith("Store a House Image"):
                 file = request.files.get('file_upload')
                 house_type = request.form.get('house_type')
                 bedrooms = request.form.get('bedrooms')
-
                 if file:
+                    from werkzeug.utils import secure_filename
                     filename = secure_filename(file.filename)
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(file_path)
@@ -99,15 +99,16 @@ def perform_operation():
                 else:
                     flash("File not uploaded properly.", "danger")
                     return redirect(url_for('dashboard'))
-
             else:
                 file_info = request.form.get('file_info', '')
 
-            # Normalize choice for customer search
-            result = session_handler.perform_operations(operation[3:], file_info)
+            # Normalize the operation choice if it comes with a prefix, e.g., "1. Search Properties"
+            normalized_operation = operation[3:] if len(operation) >= 3 and operation[1:3] == ". " else operation
+            result = session_handler.perform_operations(normalized_operation, file_info)
 
+            # For customer search, the EnquiryHandler returns an aggregated list with the keys:
+            # "house_type", "bedrooms", and "data_uri"
             if isinstance(result, list):
-                # Customer property search
                 return render_template('display_properties.html', properties=result)
             else:
                 flash("Operation completed successfully.", "success")
