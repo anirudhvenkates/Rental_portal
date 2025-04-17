@@ -54,3 +54,9 @@ file_path /path/to/image.jpg house_type apartment bedrooms 3
 data URI in Property Retriever vs GUI
 
 https://unsplash.com/s/photos/property
+
+code defines an NLP handler for property-related queries that uses NLTK to process and interpret natural language input. It works by:
+
+• Converting the query to lowercase and tokenizing it into individual words. • Applying POS tagging (if needed) and lemmatization to normalize word forms. • Extracting the property type by matching tokens (and their synonyms via WordNet) against predefined property categories (like apartment, house, villa). • Using regular expressions to find numeric expressions for bedroom counts.
+
+The overall result is a dictionary of parameters (for example, property type and number of bedrooms) that can be passed on for further processing.
