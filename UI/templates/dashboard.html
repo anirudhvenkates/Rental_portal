@@ -21,33 +21,46 @@
         <h1>Welcome, {{ name }}!</h1>
         <p>Your role is: {{ role }}</p>
 
-        <h2>Available Operations</h2>
+        <h2>Search Properties</h2>
         <form method="POST" action="{{ url_for('perform_operation') }}" enctype="multipart/form-data">
-            <select name="operation" id="operation_select" required>
-                {% for op in operations %}
-                    <option value="{{ op }}">{{ op }}</option>
-                {% endfor %}
-            </select>
+            {% if role == 'Customer' %}
+                <!-- Hidden operation for customer search -->
+                <input type="hidden" name="operation" value="1. Search Properties">
 
-            <!-- Staff: Store house image -->
-            <div id="store-house-image-details" style="display: none; margin-top: 10px;">
-                <label for="file_upload">Choose File:</label>
-                <input type="file" id="file_upload" name="file_upload"><br><br>
+                <!-- Large query box for customers -->
+                <label for="query_box">Enter your property query:</label>
+                <textarea id="query_box" name="file_info" placeholder="e.g., I need a 3 bedroom apartment with a garden and balcony" rows="5" style="width:100%; max-width:800px; padding:10px; border:1px solid #ccc; border-radius:5px;"></textarea>
+            {% else %}
+                <!-- Dropdown and fields for staff operations -->
+                <label for="operation_select">Available Operations:</label>
+                <select name="operation" id="operation_select" required>
+                    {% for op in operations %}
+                        <option value="{{ op }}">{{ op }}</option>
+                    {% endfor %}
+                </select>
 
-                <label for="house_type">House Type:</label>
-                <input type="text" id="house_type" name="house_type" placeholder="apartment, villa, etc."><br><br>
+                <!-- Store house image details -->
+                <div id="store-house-image-details" style="display: none; margin-top: 10px;">
+                    <label for="file_upload">Choose File:</label>
+                    <input type="file" id="file_upload" name="file_upload"><br><br>
 
-                <label for="bedrooms">Bedrooms:</label>
-                <input type="number" id="bedrooms" name="bedrooms" placeholder="3"><br><br>
-            </div>
+                    <label for="house_type">House Type:</label>
+                    <input type="text" id="house_type" name="house_type" placeholder="apartment, villa, etc."><br><br>
 
-            <!-- Default for all other operations -->
-            <div id="default-text-container" style="display: none; margin-top: 10px;">
-                <label for="default_info">Enter file information or property query:</label>
-                <input type="text" id="default_info" name="file_info" placeholder="Enter details">
-            </div>
+                    <label for="bedrooms">Bedrooms:</label>
+                    <input type="number" id="bedrooms" name="bedrooms" placeholder="3"><br><br>
+                </div>
 
-            <button type="submit" style="margin-top: 10px;">Perform Operation</button>
+                <!-- Default text input for other operations -->
+                <div id="default-text-container" style="display: none; margin-top: 10px;">
+                    <label for="default_info">Enter file information or query:</label>
+                    <input type="text" id="default_info" name="file_info" placeholder="Enter details">
+                </div>
+            {% endif %}
+
+            <button type="submit" style="margin-top: 10px;">
+                {% if role == 'Customer' %}Search Properties{% else %}Perform Operation{% endif %}
+            </button>
         </form>
     </main>
 
@@ -55,12 +68,12 @@
         <div class="container">
             <p>© 2025 Rental Portal. All rights reserved.</p>
             <p>Developed by Anirudh Venkatesh</p>
-            <p>Project on <a href="https://github.com/anirudhvenkates/PropMatch" target="_blank">
-                <strong><u>GitHub</u></strong></a></p>
+            <p>Project on <a href="https://github.com/anirudhvenkates/PropMatch" target="_blank"><strong><u>GitHub</u></strong></a></p>
             <p>Connect with us: <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a></p>
         </div>
     </footer>
 
+    {% if role != 'Customer' %}
     <script>
         function updateFormFields() {
             const operation = document.getElementById('operation_select').value;
@@ -79,5 +92,6 @@
         document.getElementById('operation_select').addEventListener('change', updateFormFields);
         window.onload = updateFormFields;
     </script>
+    {% endif %}
 </body>
 </html>
