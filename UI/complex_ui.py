@@ -89,18 +89,34 @@ def perform_operation():
             if operation.strip().endswith("Store a House Image"):
                 file = request.files.get('file_upload')
                 house_type = request.form.get('house_type')
-                bedrooms = request.form.get('bedrooms')
+                bedrooms   = request.form.get('bedrooms')
+                amenities      = request.form.get('amenities')
+                address    = request.form.get('address')
+                city       = request.form.get('city')
+                state      = request.form.get('state')
+                zip_code   = request.form.get('zip_code')
+                owner_name    = request.form.get('owner_name')
+                owner_address = request.form.get('owner_address')
+                owner_email   = request.form.get('owner_email')
+
                 if file:
-                    from werkzeug.utils import secure_filename
                     filename = secure_filename(file.filename)
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(file_path)
-                    file_info = f"file_path {file_path} house_type {house_type} bedrooms {bedrooms}"
+
+                    # include all metadata keys in the parsing string
+                    file_info = (
+                        f"file_path {file_path} "
+                        f"house_type {house_type} bedrooms {bedrooms} amenities {amenities} "
+                        f"address {address} city {city} state {state} zip_code {zip_code} "
+                        f"owner_name {owner_name} owner_address {owner_address} owner_email {owner_email}"
+                    )
                 else:
                     flash("File not uploaded properly.", "danger")
                     return redirect(url_for('dashboard'))
             else:
                 file_info = request.form.get('file_info', '')
+
 
             # Normalize the operation choice if it comes with a prefix, e.g., "1. Search Properties"
             normalized_operation = operation[3:] if len(operation) >= 3 and operation[1:3] == ". " else operation

@@ -47,34 +47,31 @@ class PropertyHandler:
             return result
 
     def parse_file_info(self, file_info_str):
-        """
-        Parses a string of the following format:
-          file_path <file_path> house_type <house_type> bedrooms <number>
-
-        For example:
-          file_path /home/user/image.jpg house_type apartment bedrooms 3
-        """
         tokens = file_info_str.split()
         result = {}
         key = None
         value_tokens = []
+
         for token in tokens:
-            # Check if the token is one of the expected keys
-            if token in ["file_path", "house_type", "bedrooms"]:
+            # include our new metadata keys here
+            if token in ["file_path", "house_type", "bedrooms", "amenities", "address", "city", "state", "zip_code", "owner_name", "owner_address", "owner_email"]:
                 if key is not None:
-                    # Save the previous key's value as the join of value_tokens.
                     result[key] = " ".join(value_tokens)
                 key = token
                 value_tokens = []
             else:
                 value_tokens.append(token)
-        # Save the final key if any.
+
+        # capture the last key
         if key is not None:
             result[key] = " ".join(value_tokens)
-        # For "bedrooms", convert the value to an integer if possible.
+
+        # type‐convert bedrooms if possible
         if "bedrooms" in result:
             try:
                 result["bedrooms"] = int(result["bedrooms"])
             except ValueError:
                 pass
+
+        # zip_code can be left as string, or you could int() it if you prefer
         return result
