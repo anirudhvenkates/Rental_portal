@@ -2,7 +2,7 @@ from Core_Business_Layer.Enquiry_Handler import EnquiryHandler
 from Core_Business_Layer.Property_Handler import PropertyHandler
 from Technical_Services.Authenticate.UserRegistrationHandler import UserRegistrationHandler
 from Technical_Services.Authenticate.Authenticate_Handler import AuthenticateHandler
-from Technical_Services.Logger_Service import LoggingService
+from Technical_Services.Logging.Logger_Service import LoggingService
 
 class SessionHandler:
     @staticmethod
