@@ -1,7 +1,5 @@
 from Technical_Services.File_Operations.FileHandler import FileHandler
 from Core_Business_Layer.NLP_Handler import NLPHandler
-# Import the new property retriever function
-from Technical_Services.Property_Retriever import retrieve_properties as ts_retrieve_properties
 
 class EnquiryHandler:
     def __init__(self, session):
@@ -22,18 +20,12 @@ class EnquiryHandler:
         if choice == "Search Properties":
             # Process the natural language query from file_info
             query_params = self.nlp_handler.process_query(file_info)
-            self.logger.info("Processed NLP Query: " + query_params)
+            self.logger.info("Processed NLP Query: " + str(query_params))
             # Retrieve properties based on the extracted parameters.
-            properties = self.retrieve_properties(query_params)
+            properties = self.file_handler.retrieve_properties(query_params)
             self.logger.info("Retrieve Property Information")
             print(properties)
             return properties
         else:
             self.logger.error("Invalid Operation for Customer")
             return "Invalid operation for customer."
-
-    def retrieve_properties(self, query_params):
-        """
-        Uses the technical services layer to retrieve properties based on query_params.
-        """
-        return ts_retrieve_properties(self.database_name, query_params)
