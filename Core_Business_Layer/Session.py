@@ -2,13 +2,14 @@ from Core_Business_Layer.Enquiry_Handler import EnquiryHandler
 from Core_Business_Layer.Property_Handler import PropertyHandler
 from Technical_Services.Authenticate.UserRegistrationHandler import UserRegistrationHandler
 from Technical_Services.Authenticate.Authenticate_Handler import AuthenticateHandler
+from Technical_Services.Logger_Service import LoggingService
 
 class SessionHandler:
     @staticmethod
     def create_session(user_info, password, role=None):
         # Extract username and name from the user_info list
         username = user_info
-        
+        logger = LoggingService(username)
         # Check if role is None (if it's for login)
         if role is None:
             # Handle authentication
@@ -16,6 +17,7 @@ class SessionHandler:
 
             if session:
                 # Return the appropriate handler based on the role
+                session['logger'] = logger
                 if session['role'] == 'Staff':
                     return PropertyHandler(session)
                 elif session['role'] == 'Customer':

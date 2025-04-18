@@ -3,6 +3,7 @@ from Technical_Services.File_Operations.FileHandler import FileHandler
 
 class PropertyHandler:
     def __init__(self, session):
+        self.logger = session['logger']
         self.session = session
         self.database_name = "users"
         self.file_handler = FileHandler(self.database_name)
@@ -18,24 +19,29 @@ class PropertyHandler:
             if isinstance(file_info, str) and file_info.strip() != "":
                 info_dict = self.parse_file_info(file_info)
                 if "file_path" in info_dict:
+                    self.logger.info("Storing a House Image" + info_dict["file_path"])
                     metadata = {k: v for k, v in info_dict.items() if k != "file_path"}
                     result = self.file_handler.store(info_dict["file_path"], metadata=metadata)
                     print(result)
                     return result
                 else:
+                    self.logger.error("file_path not provided in the input.")
                     return "Error: file_path not provided in the input."
             else:
+                self.logger.error("Invalid file info provided for storing house image.")
                 return "Invalid file info provided for storing house image."
 
         # Output file data
         if choice == "Output file data":
             result = self.file_handler.output_data(file_info)
+            self.logger.info("Output file data: "+ file_info)
             print(result)
             return result 
 
         # Delete a file
         if choice == "Delete a file":
             result = self.file_handler.delete(file_info)
+            self.logger.info("Delete a file: "+ file_info)
             print(result)
             return result
 
@@ -43,6 +49,7 @@ class PropertyHandler:
         if choice == "Retrieve file":
             output_file = 'output.json'
             result = self.file_handler.retrieve(output_file)
+            self.logger.info("Retrieve file: "+ result)
             print(result)
             return result
 

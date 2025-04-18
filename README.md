@@ -60,3 +60,5 @@ code defines an NLP handler for property-related queries that uses NLTK to proce
 • Converting the query to lowercase and tokenizing it into individual words. • Applying POS tagging (if needed) and lemmatization to normalize word forms. • Extracting the property type by matching tokens (and their synonyms via WordNet) against predefined property categories (like apartment, house, villa). • Using regular expressions to find numeric expressions for bedroom counts.
 
 The overall result is a dictionary of parameters (for example, property type and number of bedrooms) that can be passed on for further processing.
+
+Create a file logs/app.log

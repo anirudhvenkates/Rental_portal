@@ -5,6 +5,7 @@ from Technical_Services.Property_Retriever import retrieve_properties as ts_retr
 
 class EnquiryHandler:
     def __init__(self, session):
+        self.logger = session['logger']
         self.session = session
         # You might want to use a separate database name for properties or use the same,
         # adjust accordingly.
@@ -21,11 +22,14 @@ class EnquiryHandler:
         if choice == "Search Properties":
             # Process the natural language query from file_info
             query_params = self.nlp_handler.process_query(file_info)
+            self.logger.info("Processed NLP Query: " + query_params)
             # Retrieve properties based on the extracted parameters.
             properties = self.retrieve_properties(query_params)
+            self.logger.info("Retrieve Property Information")
             print(properties)
             return properties
         else:
+            self.logger.error("Invalid Operation for Customer")
             return "Invalid operation for customer."
 
     def retrieve_properties(self, query_params):
