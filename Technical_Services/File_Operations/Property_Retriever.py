@@ -86,9 +86,17 @@ def retrieve_properties(database, query_params):
         metadata = doc.get('metadata', {})
         data_uri = output_file_data(database, doc.get('filename'))
         results.append({
-            'house_type': metadata.get('house_type', 'N/A'),
-            'bedrooms': metadata.get('bedrooms', 'N/A'),
-            'amenities': metadata.get('amenities', []),
-            'data_uri': data_uri
+        'filename':     doc.get('filename'),
+        'house_type':   metadata.get('house_type',   'N/A'),
+        'bedrooms':     metadata.get('bedrooms',     'N/A'),
+        'amenities':    metadata.get('amenities',    []),
+        'address':      metadata.get('address',      'N/A'),
+        'city':         metadata.get('city',         'N/A'),
+        'state':        metadata.get('state',        'N/A'),
+        'zip_code':     metadata.get('zip_code',     'N/A'),
+        'owner_name':   metadata.get('owner_name',   'N/A'),
+        'owner_address':metadata.get('owner_address','N/A'),
+        'owner_email':  metadata.get('owner_email',  'N/A'),
+        'data_uri':     data_uri
         })
     return results

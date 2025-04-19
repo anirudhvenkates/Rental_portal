@@ -137,6 +137,26 @@ def perform_operation():
         flash("Session expired. Please log in again.", "danger")
         return redirect(url_for('login'))
 
+@app.route('/property_details', methods=['POST'])
+def property_details():
+    # Grab each field straight out of request.form
+    prop = {
+        'filename':      request.form['filename'],
+        'house_type':    request.form['house_type'],
+        'bedrooms':      request.form['bedrooms'],
+        'amenities':     request.form['amenities'].split(','),
+        'address':       request.form['address'],
+        'city':          request.form['city'],
+        'state':         request.form['state'],
+        'zip_code':      request.form['zip_code'],
+        'owner_name':    request.form['owner_name'],
+        'owner_address': request.form['owner_address'],
+        'owner_email':   request.form['owner_email'],
+        'data_uri':      request.form['data_uri']
+    }
+    return render_template('property_details.html', prop=prop)
+
+
 @app.route('/logout')
 def logout():
     session.clear()

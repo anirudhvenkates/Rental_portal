@@ -30,17 +30,25 @@
     <main>
         <h1>Property Search Results</h1>
         {% if properties %}
-            {% for prop in properties %}
-                <div class="property">
-                    <h3>House Type: {{ prop.house_type }}</h3>
-                    <p>Bedrooms: {{ prop.bedrooms }}</p>
-                    {% if prop.data_uri.startswith("data:image") %}
-                        <img src="{{ prop.data_uri }}" alt="Property Image">
-                    {% else %}
-                        <p>No image available.</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+				{% for prop in properties %}
+			  <div class="property">
+				<h3>House Type: {{ prop.house_type }}</h3>
+				<p>Bedrooms: {{ prop.bedrooms }}</p>
+				{% if prop.data_uri.startswith("data:image") %}
+				  <img src="{{ prop.data_uri }}" alt="Property Image">
+				{% endif %}
+
+				<form method="POST" action="{{ url_for('property_details') }}">
+				  {% for key, val in prop.items() %}
+					<input
+					  type="hidden"
+					  name="{{ key }}"
+					  value="{{ val if not val is iterable or val is string else val|join(',') }}">
+				  {% endfor %}
+				  <button type="submit">View Details</button>
+				</form>
+			  </div>
+			{% endfor %}
         {% else %}
             <p>No properties found matching your criteria.</p>
         {% endif %}
