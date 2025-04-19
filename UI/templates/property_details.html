@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Property Details – PropMatch</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    .property-detail { max-width:800px; margin:20px auto; padding:20px; border:1px solid #ccc; }
+    .property-detail img { max-width:100%; margin-bottom:20px; }
+    .property-detail p { margin:5px 0; }
+    .back-button { margin-top:20px; }
+  </style>
+</head>
+<body>
+  <header>
+        <div class="brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+            <span class="site-title">PropMatch</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+  </header>
+  <main>
+    <div class="property-detail">
+      {% if prop.data_uri.startswith("data:image") %}
+        <img src="{{ prop.data_uri }}" alt="Property Image">
+      {% endif %}
+      <p><strong>Type:</strong> {{ prop.house_type }}</p>
+      <p><strong>Bedrooms:</strong> {{ prop.bedrooms }}</p>
+      <p><strong>Amenities:</strong> {{ prop.amenities | join(', ') }}</p>
+      <p><strong>Address:</strong> {{ prop.address }}</p>
+      <p><strong>City:</strong> {{ prop.city }}</p>
+      <p><strong>State:</strong> {{ prop.state }}</p>
+      <p><strong>ZIP:</strong> {{ prop.zip_code }}</p>
+      <p><strong>Owner:</strong> {{ prop.owner_name }}</p>
+      <p><strong>Owner Address:</strong> {{ prop.owner_address }}</p>
+      <p><strong>Owner Email:</strong> {{ prop.owner_email }}</p>
+      <div class="back-button">
+        <button onclick="window.history.back();">← Back to Results</button>
+      </div>
+    </div>
+  </main>
+  <footer> … your existing footer … </footer>
+</body>
+</html>
