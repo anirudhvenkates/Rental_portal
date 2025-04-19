@@ -46,10 +46,18 @@ def simple_main():
                     if isinstance(result, list):
                         print("\nProperty Search Results:")
                         for prop in result:
-                            print("House Type:", prop.get("house_type"))
-                            print("Bedrooms:", prop.get("bedrooms"))
                             print("Image data: (data URI) ", prop.get("data_uri")[:50], "...")  # print a snippet
                             print("-" * 40)
+                            print("House Type:", prop.get("house_type"))
+                            print("Bedrooms:", prop.get("bedrooms"))
+                            print("Amenities:", prop.get("amenities"))
+                            print("Address:", prop.get("address"))
+                            print("City:", prop.get("city"))
+                            print("State:", prop.get("state"))
+                            print("Zip Code:", prop.get("zip_code"))
+                            print("Owner Name:", prop.get("owner_name"))
+                            print("Owner Address:", prop.get("owner_address"))
+                            print("Owner Email:", prop.get("owner_email"))
                     else:
                         print("\nOperation result:", result)
             else:
