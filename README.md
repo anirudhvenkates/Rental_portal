@@ -1,64 +1,134 @@
-Added a README File
-Test Ubuntu 24.04
+---
 
-wsl --list --verbose
+# PropMatch: Property Search Portal
 
-wsl --unregister <DistroName>
+## Overview
 
-wsl --install -d <DistroName>
+**PropMatch** is a SaaS-based Property Portal Software System designed to simplify real estate search and management.  
+The system allows users to enter natural language queries (e.g., *"Find me a 2-bedroom apartment in San Francisco"*) and returns a list of matching properties.  
+Built using a **Layered Architecture**, PropMatch ensures clean separation of concerns across UI, Business Logic, and Data Services layers.
 
-sudo systemctl status mongod.service
+The project leverages:
+- **Natural Language Processing (NLP)** for user queries
+- **MongoDB** for semi-structured property and user data storage
+- **Flask (Python)** for backend development
+- **Simple UI** (Command Line) and **Complex UI** (Web-based)
 
-MongoDB Enterprise Server - 8.0.5
+---
 
-MongoDB Shell - 2.4.0
+## Features
 
-MongoDB Commands:
-mongsh
-use mydb;
-show dbs;
-show collections;
-db.myCollection.drop()
-db.fs.files.find().pretty()
+- 🔍 **Natural Language Query Parsing**: Users can search properties conversationally.
+- 🏠 **Property Storage**: Staff users can upload property files with metadata (address, city, owner details, amenities, etc.).
+- 🔒 **Authentication System**: User-specific session management for customers and staff.
+- 📈 **Layered Architecture**: UI Layer, Core Business Layer, Technical Services Layer.
+- 📂 **MongoDB Integration**: Efficient storage and retrieval of semi-structured property data.
+- 🖥️ **Deployable**: Can run on local systems, WSL, or Virtual Machines (VMs).
 
-python Store_Files.py mydatabase /path/to/your/file.txt [your_filename_in_mongo.txt]
-python Retrieve_Files.py mydatabase output.json
-python Output_File_Data.py mydatabase your_filename.txt
-python Delete_File.py mydatabase your_filename.txt
+---
 
-Create a user database
-use users
-db.users.insertOne({
-    name: "Anirudh Venkatesh",
-    ID: "S001",
-    username: "anirudh",
-    password: "password123",
-    role: "Staff"
-})
-db.users.insertOne({
-    name: "Anirudh Venkatesh",
-    ID: "S002",
-    username: "anirudh_v",
-    password: "password123",
-    role: "Customer"
-})
-db.users.find()
-db.dropDatabase()
-db.users.deleteOne({ username: 'anirudh_v' })
+## Project Architecture
 
-find . -name "*.html" -exec echo "Displaying contents of {}:" \; -exec cat {} \;
-I need a 3 bedroom apartment with a garden
+```
+User Interface Layer (Simple UI / Complex UI)
+            ↓
+Core Business Logic Layer (SessionHandler, PropertyHandler, NLPHandler)
+            ↓
+Technical Services Layer (Database Services, File Management, Logging)
+```
 
-file_path /path/to/image.jpg house_type apartment bedrooms 3
+---
 
-data URI in Property Retriever vs GUI
+## Setup Instructions
 
-https://unsplash.com/s/photos/property
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/PropMatch.git
+   cd PropMatch
+   ```
 
-code defines an NLP handler for property-related queries that uses NLTK to process and interpret natural language input. It works by:
+2. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-• Converting the query to lowercase and tokenizing it into individual words. • Applying POS tagging (if needed) and lemmatization to normalize word forms. • Extracting the property type by matching tokens (and their synonyms via WordNet) against predefined property categories (like apartment, house, villa). • Using regular expressions to find numeric expressions for bedroom counts.
+3. **Install MongoDB**
+   Ensure MongoDB is installed and running on your system.
 
-The overall result is a dictionary of parameters (for example, property type and number of bedrooms) that can be passed on for further processing.
+4. **Setup NLTK Resources**
+   ```python3 download.py
+   ```
 
-Create a file logs/app.log
+5. **Run the Application**
+   - **Simple UI**:
+     ```bash
+     python simple_ui.py
+     ```
+   - **Complex UI (Web Interface)**:
+     ```bash
+     python complex_ui.py
+     ```
+   Then open your browser and navigate to `http://localhost:5000/`
+
+---
+
+## Technologies Used
+
+- **Backend**: Python (Flask)
+- **Database**: MongoDB
+- **NLP Tools**: NLTK (WordNet, POS Tagging, Lemmatization)
+- **Deployment Environments**: WSL / VM / Local Machine
+
+---
+
+## User Roles
+
+- **Staff**
+  - Upload property listings
+  - Manage metadata (owner name, amenities, address, etc.)
+- **Customer**
+  - Search for properties using natural language queries
+
+---
+
+## Screenshots
+
+*(Add screenshots of your Simple UI, Complex UI login page, dashboard, property search results, etc. if available.)*
+
+---
+
+## Known Limitations
+
+- Containerization (Docker) not implemented in the current version.
+- The UI is kept simple for demonstration purposes.
+- Designed for single-tenant architecture only (one client per instance).
+
+---
+
+## Future Enhancements
+
+- Add containerization (Docker Compose) for production deployment.
+- Extend NLP query capabilities using Deep Learning models.
+- Introduce multi-tenant SaaS architecture.
+- Add payment and booking modules.
+
+---
+
+## Authors
+
+- **Anirudh Venkatesh**
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+# 🚀 Get Started Now!
+
+Find your dream property in seconds with PropMatch!
+```
+
+---
