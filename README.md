@@ -56,7 +56,8 @@ Technical Services Layer (Database Services, File Management, Logging)
    Ensure MongoDB is installed and running on your system.
 
 4. **Setup NLTK Resources**
-   ```python3 download.py
+   ```bash
+   python3 download.py
    ```
 
 5. **Run the Application**
