@@ -37,6 +37,7 @@ class SessionHandler:
             if user_data:
                 print(message)
                 # Return the corresponding handler for the new user
+                user_data['logger'] = logger
                 if role == 'Staff':
                     return PropertyHandler(user_data)  # Staff user handler
                 elif role == 'Customer':
