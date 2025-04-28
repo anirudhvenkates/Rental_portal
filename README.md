@@ -1,5 +1,3 @@
----
-
 # PropMatch: Property Search Portal
 
 ## Overview
@@ -130,6 +128,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 # 🚀 Get Started Now!
 
 Find your dream property in seconds with PropMatch!
-```
 
 ---
